@@ -27,6 +27,7 @@ resource "aws_s3_bucket_public_access_block" "s3bucket" {
   ignore_public_acls      = false
   restrict_public_buckets = false
 }
+
 resource "aws_ssm_parameter" "hello_parameter" {
   name        = "/myapp/hello_parameter"
   description = "Parameter to store the 'hello' value"

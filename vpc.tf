@@ -7,16 +7,21 @@ resource "aws_vpc" "main" {
   }
 }
 
-data "aws_vpc_endpoint_service" "example" {
+data "aws_vpc_endpoint_service" "dynaamo" {
   service = "dynamodb"
 }
 
 resource "aws_vpc_endpoint" "dynamodbVP" {
   vpc_id       = aws_vpc.main.id
-  service_name = data.aws_vpc_endpoint_service.example.service_name
+  service_name = data.aws_vpc_endpoint_service.dynaamo.service_name
   route_table_ids = [aws_route_table.second_rt.id]
 }
 
+resource "aws_vpc_endpoint" "s33" {
+  vpc_id       = aws_vpc.main.id
+  service_name = "com.amazonaws.eu-west-1.s3"	
+  route_table_ids = [aws_route_table.second_rt.id]
+}
 
 resource "aws_security_group" "vpc_endpoints" {
   vpc_id      = aws_vpc.main.id
@@ -76,6 +81,7 @@ resource "aws_internet_gateway" "gw" {
     Name = "Demoo VPC IG"
   }
 }
+
 resource "aws_route_table" "second_rt" {
   vpc_id = aws_vpc.main.id
   
